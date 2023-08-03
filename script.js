@@ -9,8 +9,7 @@ $(function () {
 	var currentHour = dayjs().hour();
 
 	// global variables
-	var tasks = [];
-	var localStorageTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+	var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 	//header text
 	headerDay.text(today);
@@ -28,6 +27,17 @@ $(function () {
 		}
 	}
 
+	// show the local storage data on each task
+	for (var i = 0; i < tasks.length; i++) {
+		var currentId = tasks[i].id;
+		if (currentId === $("#" + currentId).attr("id")) {
+			$("#" + currentId)
+				.children("textarea")
+				.val(tasks[i].text);
+		}
+	}
+
+	// On click of the save button we save the task to local storage
 	$(".saveBtn").on("click", function () {
 		var parentId = $(this).parent().attr("id");
 		var siblingText = $(this).parent().children("textarea").val();
